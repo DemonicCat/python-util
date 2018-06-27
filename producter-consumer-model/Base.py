@@ -111,6 +111,7 @@ class Producter(threading.Thread):
                 records = os.listdir(dir_path)
                 if records:
                     self.datas.extend(records[(iteration-1)*self.offset : iteration*self.offset])
+                    self.putdatas =  self.datas[(iteration-1)*self.offset : iteration*self.offset]
             else:
                 if iteration*self.offset <= len(self.datas):
                     self.putdatas = self.datas[(iteration-1)*self.offset : iteration*self.offset]
