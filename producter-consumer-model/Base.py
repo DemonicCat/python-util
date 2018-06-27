@@ -133,7 +133,7 @@ if __name__ == '__main__':
     maxsize = 100
     threadnum = 50
     logpath = "./log/queue.log"
-    logger = self.get_logger()
+    logger = get_logger()
     statuspath = "queue_status.log"
     c_flag = False #线程控制开关
     threadlist = []
