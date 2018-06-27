@@ -60,7 +60,7 @@ class ConsumerThread (threading.Thread):   #继承父类threading.Thread
         num = os.listdir(path)
         global file_num
         lock.acquire()
-        file_num += num
+        file_num += len(num)
         print file_num
         lock.release()
 
