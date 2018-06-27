@@ -25,6 +25,9 @@ def get_logger(self, path=None):
     logger = logging.getLogger("threading_eg")
     logger.setLevel(logging.WARNING)
     path = path or './log/app.log'
+    log_dir = os.path.dirname(path)
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
     #fh = logging.FileHandler(path)
     fh = TimedRotatingFileHandler(path,
                                   when = 'd',
