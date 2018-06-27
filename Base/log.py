@@ -23,7 +23,8 @@ logger.error('The five boxing wizards jump quickly.')
 '''
 def get_logger(self, path=None):
     logger = logging.getLogger("threading_eg")
-    logger.setLevel(logging.WARNING)
+    logger.setLevel(logging.DEBUG)
+    #logger.setLevel(logging.WARNING)
     path = path or './log/app.log'
     log_dir = os.path.dirname(path)
     if not os.path.exists(log_dir):
