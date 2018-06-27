@@ -111,10 +111,10 @@ class Producter(threading.Thread):
                 if records:
                     self.datas.extend(records[(iteration-1)*self.offset : iteration*self.offset])
             else:
-                if iteration*self.offset <= len(records):
-                    self.datas.extend(records[(iteration-1)*self.offset : iteration*self.offset])
+                if iteration*self.offset <= len(self.datas):
+                    self.datas.extend(self.datas[(iteration-1)*self.offset : iteration*self.offset])
                 else:
-                    self.datas.extend(records[(iteration-1)*self.offset:])
+                    self.datas.extend(self.datas[(iteration-1)*self.offset:])
         except Exception as err:
             print err
             
