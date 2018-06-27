@@ -14,10 +14,8 @@ def get_logger(path=None):
     logger.setLevel(logging.WARNING)
     path = path or './log/app.log'
     log_dir = os.path.dirname(path)
-    lock.acquire()
     if not os.path.exists(log_dir):
         os.mkdir(log_dir)
-    lock.release()
     #fh = logging.FileHandler(path)
     from logging.handlers import TimedRotatingFileHandler
     fh = TimedRotatingFileHandler(path,
