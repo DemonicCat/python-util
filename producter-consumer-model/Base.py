@@ -9,7 +9,7 @@ import time
 import traceback
 import sys 
 
-def get_logger(self, path=None):
+def get_logger(path=None):
     logger = logging.getLogger("threading_eg")
     logger.setLevel(logging.WARNING)
     path = path or './log/app.log'
