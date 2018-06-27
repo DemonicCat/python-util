@@ -9,20 +9,38 @@ import time
 import traceback
 import sys 
 
-
+def get_logger(self, path=None):
+    logger = logging.getLogger("threading_eg")
+    logger.setLevel(logging.WARNING)
+    path = path or './log/app.log'
+    log_dir = os.path.dirname(path)
+    lock.acquire()
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+    lock.release()
+    #fh = logging.FileHandler(path)
+    from logging.handlers import TimedRotatingFileHandler
+    fh = TimedRotatingFileHandler(path,
+                                  when = 'S',
+                                  interval = 5,
+                                  backupCount=7)
+    fmt = '%(asctime)s - %(name)s - %(processName)s - %(threadName)s - %(levelname)s - %(message)s'
+    formatter = logging.Formatter(fmt)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    fh.close()
+    return logger
 
 class ConsumerThread (threading.Thread):   #继承父类threading.Thread
-    def __init__(self, threadID, name, queue, logpath, statuspath):
+    def __init__(self, threadID, name, queue, logger, statuspath):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
         self.queue = queue
-        self.logpath = logpath
+        self.logger = logger
         self.statuspath = statuspath
-        self.logger = None
     
     def run(self):     #把要执行的代码写到run函数里面 线程在创建后会直接运行run函数 
-        self.logger = get_logger(logpath)
         print "Starting " + self.name
         while True:
             try:
@@ -42,17 +60,6 @@ class ConsumerThread (threading.Thread):   #继承父类threading.Thread
         with open(self.statuspath, 'ab') as f:
             f.write('Exiting' + self.name + '\n')
         print "Exiting " + self.name
-
-    def get_logger(self, path):
-        logger = logging.getLogger("threading_eg")
-        logger.setLevel(logging.WARNING)
-        fh = logging.FileHandler(path)
-        fmt = '%(asctime)s - %(name)s - %(processName)s - %(threadName)s - %(levelname)s - %(message)s'
-        formatter = logging.Formatter(fmt)
-        fh.setFormatter(formatter)
-        logger.addHandler(fh)
-        fh.close()
-        return logger
 
     def method(self, data):
         path = os.path.join(dir_path, data)
@@ -125,7 +132,8 @@ if __name__ == '__main__':
     file_num = 0
     maxsize = 100
     threadnum = 50
-    logpath = "queue.log"
+    logpath = "./log/queue.log"
+    logger = self.get_logger()
     statuspath = "queue_status.log"
     c_flag = False #线程控制开关
     threadlist = []
@@ -134,7 +142,7 @@ if __name__ == '__main__':
     p = Producter(0, 'Thread-Producter', q, maxsize, statuspath)
     p.start()
     for i in range(threadnum):
-        t = ConsumerThread(i, 'Thread-%d' % i, q, logpath, statuspath)
+        t = ConsumerThread(i, 'Thread-%d' % i, q, logger, statuspath)
         threadlist.append(t)
     for t in threadlist:
         t.setDaemon(True)  #守护线程
