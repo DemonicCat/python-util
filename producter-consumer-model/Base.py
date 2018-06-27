@@ -74,6 +74,7 @@ class Producter(threading.Thread):
         self.name = name
         self.queue = queue
         self.datas = []
+        self.putdatas = []
         self.offset = offset
         self.statuspath = statuspath
         self.iteration = 1
@@ -89,7 +90,7 @@ class Producter(threading.Thread):
                     self.read_datas(self.iteration)
                     if not self.datas:
                         break
-                    for data in self.datas:
+                    for data in self.putdatas:
                         self.queue.put(data, block=True, timeout=None)
                     print 'Wait for finish'
                     self.iteration += 1
@@ -112,9 +113,9 @@ class Producter(threading.Thread):
                     self.datas.extend(records[(iteration-1)*self.offset : iteration*self.offset])
             else:
                 if iteration*self.offset <= len(self.datas):
-                    self.datas.extend(self.datas[(iteration-1)*self.offset : iteration*self.offset])
+                    self.putdatas = self.datas[(iteration-1)*self.offset : iteration*self.offset]
                 else:
-                    self.datas.extend(self.datas[(iteration-1)*self.offset:])
+                    self.putdatas = self.datas[(iteration-1)*self.offset:]
         except Exception as err:
             print err
             
