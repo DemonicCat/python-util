@@ -11,7 +11,9 @@
 threading 模块的对象 Lock、 RLock、 Condition、 Semaphore 和 BoundedSemaphore 都包含
 上下文管理器，也就是说,它们都可以使用 with 语句
 
+'''
 def loop(nsec):
   myname = currentThread().name
   with lock:
     remaining.add(myname)
+'''
