@@ -31,7 +31,7 @@ scoped_session类似单例模式，当我们调用使用的时候，会先在Reg
 要是没有，就创建新的session，注册到Registry中以便下次返回给调用者。
 这样就实现了这样一个目的：在同一个线程中，call scoped_session 的时候，返回的是同一个对象
 '''
-#session_factory = sessionmaker(bind=some_engine)
+#session_factory = sessionmaker(bind=engine)
 #Session = scoped_session(session_factory)
 
 session = Session()
