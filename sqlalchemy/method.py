@@ -7,7 +7,31 @@ record = session.query(Model).get(id)
 records = session.query(Model.id, Model.uri)\
                    .filter(Model.status == 0)\
                    .all()
-                   
+
+query.filter(User.name == 'ed') #equals
+query.filter(User.name != 'ed') #not equals
+query.filter(User.name.like('%ed%')) #LIKE
+uery.filter(User.name.in_(['ed','wendy', 'jack'])) #IN
+query.filter(User.name.in_(session.query(User.name).filter(User.name.like('%ed%'))#IN
+query.filter(~User.name.in_(['ed','wendy', 'jack']))#not IN
+query.filter(User.name == None)#is None
+query.filter(User.name != None)#not None
+from sqlalchemy import and_
+query.filter(and_(User.name =='ed',User.fullname =='Ed Jones')) # and
+query.filter(User.name == 'ed',User.fullname =='Ed Jones') # and
+query.filter(User.name == 'ed').filter(User.fullname == 'Ed Jones')# and
+from sqlalchemy import or_
+query.filter(or_(User.name =='ed', User.name =='wendy')) #or
+query.filter(User.name.match('wendy')) #match  
+
+#只查询第二条和第三条数据                          
+for u in session.query(User).order_by(User.id)[1:3]:
+
+bus_class_id = rs.query(Business)\
+                    .filter(Business.id == bus_id)\
+                    .first()\
+                    .class_id
+                           
 def get(self):
     rs = ReadSession()
     filter_params = dict(request.args.items())
@@ -37,3 +61,7 @@ def get(self):
     records_num = records.count() #计数
     records = records.order_by(desc(Model.create_time)) #排序
     records = records.slice((page_index - 1) * page_size, page_index * page_size) #偏移分页
+    
+    
+    
+
