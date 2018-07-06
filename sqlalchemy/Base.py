@@ -35,7 +35,7 @@ scoped_session类似单例模式，当我们调用使用的时候，会先在Reg
 #Session = scoped_session(session_factory)
 
 #配置
-Session.configure(bind=engine, autocommit=(not write), autoflush=False, expire_on_commit=False)
+Session.configure(bind=engine, autocommit=False, autoflush=False, expire_on_commit=False)
 
 session = Session()
 ed_user = User(name='ed')
