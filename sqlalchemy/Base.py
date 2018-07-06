@@ -34,6 +34,9 @@ scoped_session类似单例模式，当我们调用使用的时候，会先在Reg
 #session_factory = sessionmaker(bind=engine)
 #Session = scoped_session(session_factory)
 
+#配置
+Session.configure(bind=engine, autocommit=(not write), autoflush=False, expire_on_commit=False)
+
 session = Session()
 ed_user = User(name='ed')
 session.add(ed_user)
