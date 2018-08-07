@@ -19,7 +19,7 @@ class User(Base):
     name = Column(String(50), nullable=True)
 
 # 初始化数据库连接:
-engine = create_engine('mysql+mysqlconnector://root:root@192.168.1.13:3306/test')
+engine = create_engine('mysql+mysqlconnector://root:root@192.168.1.13:3306/test?charset=utf8')
 #engine = create_engine('mysql+mysqldb://root:root@192.168.137.99:3306/test')
 
 # 创建DBSession类型:
