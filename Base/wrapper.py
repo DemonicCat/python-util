@@ -53,3 +53,43 @@ def check_login():
         return decorator
     return wrapper
 
+#装饰器内部传参
+import datetime
+ 
+class ca:
+    def __init__(self):
+        self.value='initial'
+        self.stat='ok'
+        
+    def domethod(self):
+        self.value='changed'
+        self.stat='dump'
+        print 'The value is %s'%self.value
+        print 'The stat is %s'%self.stat
+        return self
+ 
+    def backhome(self):
+        self.value='initial'
+        print 'The value is back to %s'%self.value
+ 
+    def setok(self):
+        self.stat='ok'
+        print 'The stat is %s'%self.stat
+ 
+def dec(func):
+    def _dec(*a,**ka):
+        InOfa=ca()
+        targetargs=InOfa.domethod()
+        res=func(targetargs,*a,**ka)
+        res[0].setok()
+        return res[1]
+    return _dec
+ 
+@dec
+def thecorefunc(targetargs,date=datetime.date.today()):
+    print date
+    targetargs.backhome()
+    return (targetargs,date)
+ 
+if __name__=='__main__':
+    thecorefunc()
