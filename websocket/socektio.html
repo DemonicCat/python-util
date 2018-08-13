@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+       <meta charset="utf-8">
+       <title>socketio</title>       
+   </head>
+   <body>
+      <div id="sse">
+         <button id="sse">sse</button>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
+      <script type="text/javascript">
+
+
+         document.getElementById('sse').onclick = function() {
+                  
+                  
+                let socket = io.connect('http://192.168.1.198:16082');
+                socket.open()
+
+                console.log('a');
+                // 打开一个 web socket
+                
+                //发送消息
+                //socket.emit('request_for_response',{'param':'value'});
+
+
+                socket.on('error',function(err){
+                   
+                        console.log(err);              
+                });
+                socket.on('response',function(data){
+                //监听回复的消息
+                    console.log(data)
+                    socket.close()
+                });
+         }
+      </script>
+
+   </body>
+</html>
