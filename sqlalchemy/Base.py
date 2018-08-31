@@ -38,13 +38,20 @@ scoped_session类似单例模式，当我们调用使用的时候，会先在Reg
 #配置
 Session.configure(bind=engine, autocommit=False, autoflush=False, expire_on_commit=False)
 
+def creat_table()
+    Base.metadata.create_all(engine)  #创建表
+    # Base.metadata.drop_all(engine)   #删除表 
+
 session = Session()
-ed_user = User(name='ed')
-session.add(ed_user)
-session.commit()
+
+def inster():    
+    ed_user = User(name='ed')
+    session.add(ed_user)
+    session.commit()
+
 
 #查询
-for instance in session.query(User).order_by(User.id):
-    print instance.name,instance.id
-    
-session.close()
+def query():
+    for instance in session.query(User).order_by(User.id):
+        print instance.name,instance.id
+    session.close()
