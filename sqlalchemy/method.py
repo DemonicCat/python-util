@@ -63,5 +63,20 @@ def get(self):
     records = records.slice((page_index - 1) * page_size, page_index * page_size) #偏移分页
     
     
-    
+def sql_query():
+    session = Session()
+    #查询
+    q_ids = session.execute('select id from users \
+                        where  age = 30 \
+                        and sex = 1 \
+                        and phone > 18502541423')
+    #import pdb;pdb.set_trace()
+    ids = [str(q[0]) for q in q_ids.fetchall()]
+    print tuple(ids)
+    q_cs = session.execute('select country from users \
+                    where  id in (' + ','.join(tuple(ids)) + ')')
+    print q_cs.fetchone() #获取单条数据
+    print q_cs.fetchall() #接收全部的返回结果行
+    print q_cs.rowcount #这是一个只读属性，并返回执行execute()方法后影响的行数
+   
 
