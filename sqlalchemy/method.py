@@ -47,6 +47,8 @@ def get(self):
         elif k in ['purpose', 'data_input', 'version', 'scale', 'input_size']:
             #模糊搜索
             records = records.filter(getattr(Model, k).like("%{x}%".format(x=v.encode('utf8'))))
+            #sqlite 不用format
+            #records = records.filter(getattr(Model, k).like("%"+v+"%"))
         elif k == 'model_output':           
             output_list = rs.query(ModelOutput.model_id)\
                         .filter(ModelOutput.status == 0)\
