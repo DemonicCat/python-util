@@ -21,6 +21,8 @@ class User(Base):
 # 初始化数据库连接:
 engine = create_engine('mysql+mysqlconnector://root:root@192.168.1.13:3306/test?charset=utf8')
 #engine = create_engine('mysql+mysqldb://root:root@192.168.137.99:3306/test')
+#sqlite
+#engine = create_engine(r'sqlite:///./img_mark.db')
 
 # 创建DBSession类型:
 Session = sessionmaker(bind=engine)
